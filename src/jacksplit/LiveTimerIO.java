@@ -15,7 +15,7 @@ public abstract class LiveTimerIO implements ActionListener, WindowListener{
         f.setLayout(null);
 
         final TextField tf = new TextField();
-        tf.setBounds(0, 0, 400, 80);
+        tf.setBounds(0, 0, 400, 100);
 //        tf.addKeyListener(this);
         f.add(tf);
 
