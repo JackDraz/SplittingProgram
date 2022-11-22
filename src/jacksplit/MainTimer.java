@@ -18,12 +18,5 @@ public class MainTimer {
     public static long getTimeElapsed(MainTimer timer) {
         return System.currentTimeMillis() - getStartTime(timer);
     }
-    public static void main(String[] args) throws InterruptedException {
-        MainTimer maintimer = new MainTimer(System.currentTimeMillis());
-        System.out.println(maintimer.startTime);
-        Thread.sleep(2000);
-        long newTime = getTimeElapsed(maintimer);
-        System.out.println(newTime);
-    }
-
 }
+

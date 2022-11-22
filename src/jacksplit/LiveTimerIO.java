@@ -1,57 +1,45 @@
 package jacksplit;
-
-import javax.swing.*;
-import java.awt.*;
+import java.util.*;
+import java.io.*;
 import java.awt.event.*;
 
-import static java.lang.String.format;
+import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 
-public abstract class LiveTimerIO implements ActionListener, WindowListener{
+public abstract class LiveTimerIO implements ActionListener, WindowListener {
 
     public static void main(String[] args) {
-        JFrame f = new JFrame("Draft Window");
-        f.setSize(400, 1000);
-        f.setVisible(true);
-        f.setLayout(null);
+        ArrayList<SplitTime> splitTimes = new ArrayList<>();
+        String configFilePath = "..\\splits.txt";
 
-        final TextField tf = new TextField();
-        tf.setBounds(0, 0, 400, 100);
-//        tf.addKeyListener(this);
-        f.add(tf);
-
-        JButton b = new JButton("TOUCH HERE");
-        b.setBounds(50, 100, 120, 20);
-        f.add(b);
-        f.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                tf.setText("You have pressed \"" + e.getKeyChar() +"\"");
-                System.out.println(f.getWidth());
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
-
-        f.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
-                f.dispose();
-            }
-        });
+        importSplits(splitTimes, configFilePath);
+        System.out.println(splitTimes);
+//        JFrame f = new JFrame("Draft Window");
+//        f.setSize(400, 1000);
+//        f.setVisible(true);
+//        f.setLayout(null);
     }
 
-    public void importSplits(SplitTime[] numSplits, JFrame mainWindow){
-        for (SplitTime split : numSplits) {
+    public void userSplit(MainTimer timer) {
+        
+    }
 
-
+    public static void importSplits(ArrayList<SplitTime> splitTimes, String fileDir) {
+        try {
+            FileInputStream propsInput = new FileInputStream(fileDir);
+            Properties prop = new Properties();
+            prop.load(propsInput);
+            int totalSplit = parseInt(prop.getProperty("TOTAL_SPLITS"));
+            for (int i = 1; i <= totalSplit; i++) {
+                SplitTime split = new SplitTime(prop.getProperty("SPLIT" + i + "_NAME"), parseDouble(prop.getProperty("SPLIT" + i + "_GOLD")));
+                splitTimes.add(split);
+            }
+            double test = parseDouble(prop.getProperty("SPLIT1_GOLD"));
+            System.out.println(test);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("sure");
         }
-
     }
 }
