@@ -43,7 +43,12 @@ public class MainTimer {
     }
 
     public static long getTimeElapsed(MainTimer timer) {
-        return timer.getCurrentTime()- getStartTime(timer);
+        return timer.currentTime - timer.startTime;
+    }
+    public void startSplit() {
+        this.setStartTime(System.currentTimeMillis());
+        this.setCurrentTime(System.currentTimeMillis());
+        this.setCurrentSplit((short) (this.getCurrentSplit() + 1));
     }
 }
 
